@@ -1,0 +1,10 @@
+machine:
+  python:
+    version: 3.5.1
+
+  pre:
+    - pip install -r requirements.txt
+
+test:
+  override:
+    - python hashtags/manage.py test functional_tests
