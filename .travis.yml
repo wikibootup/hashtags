@@ -10,7 +10,7 @@ sudo: required
 addons:
   apt:
     packages:
-      firefox: "45.0.2"
+      - firefox
 
 before_install:
     - "export DISPLAY=:99.0"
