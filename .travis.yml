@@ -8,9 +8,7 @@ python:
 dist: trusty
 sudo: required
 addons:
-  apt:
-    packages:
-      - firefox
+  - firefox
 
 before_install:
     - "export DISPLAY=:99.0"
@@ -25,4 +23,4 @@ before_script:
 
 script:
   - python hashtags/manage.py test -v 3
-  - python hashtags/manage.py test -v 3
+  - python hashtags/manage.py test -v 3 hashtags/functional_tests
