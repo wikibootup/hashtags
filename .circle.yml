@@ -7,4 +7,4 @@ machine:
 
 test:
   override:
-    - python hashtags/manage.py test functional_tests
+    - python hashtags/manage.py test -v 3
