@@ -1,8 +1,8 @@
-from django.test import LiverServerTestCase
+from django.test import LiveServerTestCase
 from selenium import webdriver
 
 
-class NewVisitorTest(LiverServerTestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome()
