@@ -1,0 +1,9 @@
+machine:
+  python:
+    version: 3.5.1
+
+test:
+  override:
+    - echo "assert pass test"
+
+
