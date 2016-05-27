@@ -28,5 +28,8 @@ tests/report/
 
 db.sqlite3
 
-# Plugins
+# Test Plugins
 .coverage
+
+# JS & plugins
+bower_components/
