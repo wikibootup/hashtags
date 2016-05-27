@@ -1,2 +1,4 @@
 Django==1.9.5
 selenium==2.53.1
+coverage==4.0.3
+python-coveralls==2.7.0

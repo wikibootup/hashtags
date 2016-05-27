@@ -22,7 +22,21 @@ SECRET_KEY = 'f+kfc(526ahulk1m)(1!f7f4fzmh!cejw&l$&vztk6-0%nlzf0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            # insert your TEMPLATE_DIRS here
+        ],
+        'APP_DIRS': True,
+                'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+            ],
+            'debug': DEBUG,
+        },
+    },
+]
 
 ALLOWED_HOSTS = []
 
@@ -36,6 +50,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'hashtags',
 )
 
 MIDDLEWARE_CLASSES = (

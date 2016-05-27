@@ -27,3 +27,6 @@ build/
 tests/report/
 
 db.sqlite3
+
+# Plugins
+.coverage

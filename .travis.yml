@@ -29,5 +29,8 @@ before_script:
   - python hashtags/manage.py makemigrations
 
 script:
-  - python hashtags/manage.py test -v 3
-  - python hashtags/manage.py test -v 3 hashtags/functional_tests
+  - python hashtags/manage.py test -v 3 hashtags/
+  - coverage run hashtags/manage.py test -v 3 hashtags/
+
+after_success:
+  - coveralls
