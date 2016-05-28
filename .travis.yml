@@ -27,10 +27,13 @@ install:
 
 before_script:
   - python hashtags/manage.py makemigrations
+  - npm install
+  - bower install
 
 script:
   - python hashtags/manage.py test -v 3 hashtags/
   - coverage run hashtags/manage.py test -v 3 hashtags/
+  - grunt qunit
 
 after_success:
   - coveralls
