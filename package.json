@@ -7,6 +7,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "bower": "^1.7.9"
+  },
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "grunt-cli": "^1.2.0"
   }
 }
