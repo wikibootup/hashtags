@@ -1,7 +1,7 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 
-from post.models import Post
+from posts.models import Post
 
 
 class NewVisitorTest(LiveServerTestCase):
