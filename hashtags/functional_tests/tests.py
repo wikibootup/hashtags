@@ -1,7 +1,7 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 
-from posts.models import Post
+from posts.models import Post, Tag
 
 
 class NewVisitorTest(LiveServerTestCase):
@@ -22,10 +22,18 @@ class NewVisitorTest(LiveServerTestCase):
         It assumes that the one post is shown to a new visitor. the visitor can
         see the post which contains text and tags.
         """
-        post = Post.create_object(post='It is text', tags=('tag1', 'tag2',))
+        post = Post(text='It is text')
+        post.save()
+        tag1 = Tag(tag='tag1')
+        tag1.save()
+        tag2 = Tag(tag='tag2')
+        tag2.save()
+
+        tag1.post.add(post)
+        tag2.post.add(post)
 
         self.browser.get(self.live_server_url)
-        page_text = self.browser.find_elements_by_tag_name('body').text
-        self.assertIn('It is text', page_text)
-        self.assertIn('tag1', page_text)
-        self.assertIn('tag2', page_text)
+        post_table = self.browser.find_elements_by_class_name('post_table')
+        self.assertIn('It is text', post_table)
+        self.assertIn('tag1', post_table)
+        self.assertIn('tag2', post_table)
