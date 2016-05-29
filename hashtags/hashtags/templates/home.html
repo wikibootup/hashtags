@@ -1,11 +1,14 @@
 <html>
   <title>Hashtags</title>
   <body>
-  {% for post in posts %}
-    {{ post.text }}
-    {% for tag in post.tag_set.all %}
-      {{ tag.tag }}
+    <form method="GET">
+      {{ form.as_p }}
+
+    {% for post in posts %}
+      {{ post.text }}
+      {% for tag in post.tag_set.all %}
+        {{ tag.tag }}
+      {% endfor %}
     {% endfor %}
-  {% endfor %}
   </body>
 </html>
