@@ -8,6 +8,7 @@ class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome()
+        self.browser.implicitly_wait(3)
 
     def tearDown(self):
         self.browser.quit()
@@ -33,7 +34,7 @@ class NewVisitorTest(LiveServerTestCase):
         tag2.post.add(post)
 
         self.browser.get(self.live_server_url)
-        post_table = self.browser.find_elements_by_class_name('post_table')
-        self.assertIn('It is text', post_table)
-        self.assertIn('tag1', post_table)
-        self.assertIn('tag2', post_table)
+        body_text = self.browser.find_element_by_tag_name('body').text
+        self.assertIn('It is text', body_text)
+        self.assertIn('tag1', body_text)
+        self.assertIn('tag2', body_text)
