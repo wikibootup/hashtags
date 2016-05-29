@@ -2,6 +2,7 @@ from django.test import LiveServerTestCase
 from selenium import webdriver
 
 from posts.models import Post, Tag
+from posts.forms import SearchForm
 
 
 class NewVisitorTest(LiveServerTestCase):
@@ -38,3 +39,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('It is text', body_text)
         self.assertIn('tag1', body_text)
         self.assertIn('tag2', body_text)
+
+    def test_home_has_search_tag(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], SearchForm)
