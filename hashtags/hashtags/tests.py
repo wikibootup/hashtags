@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.test import TestCase
 
 import hashtags.views
+from posts.forms import SearchForm
 
 
 class HomePageTest(TestCase):
@@ -15,5 +16,5 @@ class HomePageTest(TestCase):
     def test_home_returns_correct_html(self):
         request = HttpRequest()
         response = hashtags.views.home(request)
-        expected_html = render_to_string('home.html')
-        self.assertEqual(response.content.decode(), expected_html)
+        expected_html = render_to_string('home.html', {'form': SearchForm()})
+        self.assertMultiLineEqual(response.content.decode(), expected_html)
