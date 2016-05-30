@@ -8,7 +8,7 @@ def home(request):
     if request.method == 'GET':
         form = SearchForm(request.GET)
         if form.is_valid():
-            tag_query = form.cleaned_data['search_tags']
+            tag_query = form.cleaned_data['search_tag']
             tag = Tag.objects.get(tag=tag_query)
             posts = tag.post.all()
 

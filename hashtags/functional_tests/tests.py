@@ -58,7 +58,7 @@ class NewVisitorTest(LiveServerTestCase):
         tag1.post.add(post1)
 
         self.browser.get(self.live_server_url)
-        inputbox = self.browser.find_element_by_id('id_search_tags')
+        inputbox = self.browser.find_element_by_id('id_search_tag')
         inputbox.send_keys('tag1')
         inputbox.send_keys(Keys.ENTER)
 
@@ -85,7 +85,7 @@ class NewVisitorTest(LiveServerTestCase):
         tag1.post.add(post2)
 
         self.browser.get(self.live_server_url)
-        inputbox = self.browser.find_element_by_id('id_search_tags')
+        inputbox = self.browser.find_element_by_id('id_search_tag')
         inputbox.send_keys('tag1')
         inputbox.send_keys(Keys.ENTER)
 

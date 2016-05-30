@@ -8,11 +8,11 @@ from posts.models import Post, Tag
 
 class SearchTagsTest(TestCase):
 
-    def test_form_renders_search_tags_input(self):
+    def test_form_renders_search_tag_input(self):
         form = SearchForm()
         self.assertIn('placeholder="검색"', form.as_p())
 
-    def test_search_tags_query_out_correct_posts(self):
+    def test_search_tag_query_out_correct_posts(self):
         """
         It assumes that the two posts are linked in 'tag1'.
         New visitor searches 'tag1', then the two posts are queried out in the
@@ -31,6 +31,6 @@ class SearchTagsTest(TestCase):
         tag1.post.add(post1)
         tag1.post.add(post2)
 
-        response = self.client.get('/', data={'search_tags': tag1.tag})
+        response = self.client.get('/', data={'search_tag': tag1.tag})
         self.assertContains(response, post1.text)
         self.assertContains(response, post2.text)
