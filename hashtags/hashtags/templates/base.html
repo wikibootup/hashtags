@@ -1,0 +1,9 @@
+<html>
+  <title>Hashtags</title>
+<body>
+  <form method="GET" action="{% block form_action %}{% endblock %}">
+    {{ form.as_p }}
+  {% block list_posts %}
+  {% endblock %}
+</body>
+</html>
