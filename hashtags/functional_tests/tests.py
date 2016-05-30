@@ -45,6 +45,22 @@ class NewVisitorTest(LiveServerTestCase):
         response = self.client.get('/')
         self.assertIsInstance(response.context['form'], SearchForm)
 
+    def test_search_tag_query_results_correct_url(self):
+        post1 = Post(text='It is text1')
+        post1.save()
+
+        tag1 = Tag(tag='tag1')
+        tag1.save()
+
+        tag1.post.add(post1)
+
+        self.browser.get(self.live_server_url)
+        inputbox = self.browser.find_element_by_id('id_search_tags')
+        inputbox.send_keys('tag1')
+        inputbox.send_keys(Keys.ENTER)
+
+        self.assertEqual('/tag1', self.browser.current_url)
+
     def test_search_tag_query_results_correct_posts(self):
         """
         It assumes that the two posts are linked in 'tag1'.
