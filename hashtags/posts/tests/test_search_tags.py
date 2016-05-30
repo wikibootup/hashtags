@@ -5,7 +5,7 @@ from django.test import TestCase
 from posts.forms import SearchForm
 
 
-class SearchFormTest(TestCase):
+class SearchTagsTest(TestCase):
 
     def test_form_renders_search_tags_input(self):
         form = SearchForm()
