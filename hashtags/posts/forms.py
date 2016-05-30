@@ -2,7 +2,7 @@ from django import forms
 
 
 class SearchForm(forms.Form):
-    search_tags = forms.CharField(
+    search_tag = forms.CharField(
         widget=forms.fields.TextInput(attrs={
             'placeholder': '검색',
         }),
