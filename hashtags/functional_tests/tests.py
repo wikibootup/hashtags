@@ -1,5 +1,6 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 from posts.models import Post, Tag
 from posts.forms import SearchForm
@@ -43,3 +44,33 @@ class NewVisitorTest(LiveServerTestCase):
     def test_home_has_search_tag(self):
         response = self.client.get('/')
         self.assertIsInstance(response.context['form'], SearchForm)
+
+    def test_search_tag_query_results_correct_posts(self):
+        """
+        It assumes that the two posts are linked in 'tag1'.
+        New visitor searches 'tag1', then the two posts are queried out in the
+        result.
+        """
+
+        post1 = Post(text='It is text1')
+        post1.save()
+
+        post2 = Post(text='It is text2')
+        post2.save()
+
+        tag1 = Tag(tag='tag1')
+        tag1.save()
+
+        tag1.post.add(post1)
+        tag1.post.add(post2)
+
+        self.browser.get(self.live_server_url)
+        inputbox = self.browser.find_element_by_id('id_search_tags')
+        inputbox.send_keys('tag1')
+        inputbox.send_keys(Keys.ENTER)
+
+        list_posts = self.browser.find_element_by_id('id_list_posts')
+        posts = tags.find_elements_by_tag_name('p')
+
+        self.assertTrue(any(post1.text in posts[0].text))
+        self.assertTrue(any(post2.text in posts[1].text))
