@@ -3,6 +3,7 @@
 from django.test import TestCase
 
 from posts.forms import SearchForm
+from posts.models import Post, Tag
 
 
 class SearchTagsTest(TestCase):
@@ -30,7 +31,6 @@ class SearchTagsTest(TestCase):
         tag1.post.add(post1)
         tag1.post.add(post2)
 
-        connect('/')
-        result = search('tag1')
-        self.assertTrue(post1.text in result)
-        self.assertTrue(post2.text in result)
+        response = self.client.get('/', data={'search_tags': tag1.tag})
+        self.assertContains(response, post1.text)
+        self.assertContains(response, post2.text)
