@@ -4,11 +4,13 @@
     <form method="GET">
       {{ form.as_p }}
 
+    <div id="id_list_posts">
     {% for post in posts %}
       {{ post.text }}
       {% for tag in post.tag_set.all %}
         {{ tag.tag }}
       {% endfor %}
     {% endfor %}
+    </div>
   </body>
 </html>

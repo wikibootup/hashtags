@@ -47,7 +47,6 @@ class NewVisitorTest(LiveServerTestCase):
         response = self.client.get('/')
         self.assertIsInstance(response.context['form'], SearchForm)
 
-    @skip("need to connect correct url, view")
     def test_search_tag_query_results_correct_url(self):
         post1 = Post(text='It is text1')
         post1.save()
@@ -62,9 +61,11 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys('tag1')
         inputbox.send_keys(Keys.ENTER)
 
-        self.assertEqual('/tag1', self.browser.current_url)
+        self.assertEqual(
+            self.live_server_url + '/?search_tag=' + tag1.tag,
+            self.browser.current_url
+        )
 
-    @skip("need to add correct tag, id in template")
     def test_search_tag_query_results_correct_posts(self):
         """
         It assumes that the two posts are linked in 'tag1'.
@@ -78,6 +79,9 @@ class NewVisitorTest(LiveServerTestCase):
         post2 = Post(text='It is text2')
         post2.save()
 
+        post3 = Post(text='It is text3')
+        post3.save()
+
         tag1 = Tag(tag='tag1')
         tag1.save()
 
@@ -90,7 +94,6 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
         list_posts = self.browser.find_element_by_id('id_list_posts')
-        posts = tags.find_elements_by_tag_name('p')
-
-        self.assertTrue(any(post1.text in posts[0].text))
-        self.assertTrue(any(post2.text in posts[1].text))
+        self.assertIn(post1.text, list_posts.text)
+        self.assertIn(post1.text, list_posts.text)
+        self.assertNotIn(post1.text, post3.text)
