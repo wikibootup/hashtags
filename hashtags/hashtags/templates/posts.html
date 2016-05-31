@@ -5,10 +5,12 @@
 {% block list_posts %}
   <div id="id_list_posts">
     {% for post in posts %}
-      {{ post.text }}
-      {% for tag in post.tag_set.all %}
-        {{ tag.tag }}
-      {% endfor %}
+      <p>
+        {{ post.text }}
+        {% for tag in post.tag_set.all %}
+          {{ tag.tag }}
+        {% endfor %}
+      </p>
     {% endfor %}
   </div>
 {% endblock %}
