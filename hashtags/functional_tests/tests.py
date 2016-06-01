@@ -11,8 +11,17 @@ from posts.forms import SearchForm
 class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
+        self.post = []
+        self.tag = []
+        for i in range(10):
+            self.post.append(Post(text='It is text%s' % (i+1)))
+            self.post[i].save()
+            self.tag.append(Tag(tag='tag%s' % (i+1)))
+            self.tag[i].save()
+
         self.browser = webdriver.Chrome()
         self.browser.implicitly_wait(3)
+        
 
     def tearDown(self):
         self.browser.quit()
@@ -27,81 +36,51 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIsInstance(response.context['form'], SearchForm)
 
     def test_search_tag_query_results_correct_url(self):
-        post1 = Post(text='It is text1')
-        post1.save()
-
-        tag1 = Tag(tag='tag1')
-        tag1.save()
-
-        tag1.post.add(post1)
+        self.tag[0].post.add(self.post[0])
 
         self.browser.get(self.live_server_url)
         inputbox = self.browser.find_element_by_id('id_search_tag')
-        inputbox.send_keys('tag1')
+        inputbox.send_keys(self.tag[0].tag)
         inputbox.send_keys(Keys.ENTER)
 
         self.assertEqual(
-            self.live_server_url + '/?search_tag=' + tag1.tag,
+            self.live_server_url + '/?search_tag=' + self.tag[0].tag,
             self.browser.current_url
         )
 
     def test_search_tag_query_results_correct_posts(self):
         """
-        It assumes that the two posts are linked in 'tag1'.
-        New visitor searches 'tag1', then the two posts are queried out in the
+        It assumes that the two posts are linked in 'self.tag[0]'.
+        New visitor searches 'self.tag[0]', then the two posts are queried out in the
         result.
         """
 
-        post1 = Post(text='It is text1')
-        post1.save()
-
-        post2 = Post(text='It is text2')
-        post2.save()
-
-        post3 = Post(text='It is text3')
-        post3.save()
-
-        tag1 = Tag(tag='tag1')
-        tag1.save()
-
-        tag1.post.add(post1)
-        tag1.post.add(post2)
+        self.tag[0].post.add(self.post[0])
+        self.tag[0].post.add(self.post[1])
 
         self.browser.get(self.live_server_url)
         inputbox = self.browser.find_element_by_id('id_search_tag')
-        inputbox.send_keys('tag1')
+        inputbox.send_keys(self.tag[0].tag)
         inputbox.send_keys(Keys.ENTER)
 
         list_posts = self.browser.find_element_by_id('id_list_posts')
-        self.assertIn(post1.text, list_posts.text)
-        self.assertIn(post1.text, list_posts.text)
-        self.assertNotIn(post1.text, post3.text)
+        self.assertIn(self.post[0].text, list_posts.text)
+        self.assertIn(self.post[1].text, list_posts.text)
+        self.assertNotIn(self.post[0].text, self.post[2].text)
 
     def test_search_tag_query_count_correct_numbers(self):
         """
-        It assumes that the two posts are linked in 'tag1'.
-        New visitor searches 'tag1', then the two posts are queried out in the
+        It assumes that the two posts are linked in 'self.tag[0]'.
+        New visitor searches 'self.tag[0]', then the two posts are queried out in the
         result.
         """
 
-        post1 = Post(text='It is text1')
-        post1.save()
-
-        post2 = Post(text='It is text2')
-        post2.save()
-
-        post3 = Post(text='It is text3')
-        post3.save()
-
-        tag1 = Tag(tag='tag1')
-        tag1.save()
-
-        tag1.post.add(post1)
-        tag1.post.add(post2)
+        self.tag[0].post.add(self.post[0])
+        self.tag[0].post.add(self.post[1])
 
         self.browser.get(self.live_server_url)
         inputbox = self.browser.find_element_by_id('id_search_tag')
-        inputbox.send_keys('tag1')
+        inputbox.send_keys(self.tag[0].tag)
         inputbox.send_keys(Keys.ENTER)
 
         list_posts = self.browser.find_element_by_id('id_list_posts')

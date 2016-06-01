@@ -8,6 +8,15 @@ from posts.models import Post, Tag
 
 class SearchTagsTest(TestCase):
 
+    def setUp(self):
+        self.post = []
+        self.tag = []
+        for i in range(10):
+            self.post.append(Post(text='It is text%s' % (i+1)))
+            self.post[i].save()
+            self.tag.append(Tag(tag='tag%s' % (i+1)))
+            self.tag[i].save()
+
     def test_form_renders_search_tag_input(self):
         form = SearchForm()
         self.assertIn('placeholder="검색"', form.as_p())
@@ -19,18 +28,9 @@ class SearchTagsTest(TestCase):
         result.
         """
 
-        post1 = Post(text='It is text1')
-        post1.save()
+        self.tag[0].post.add(self.post[0])
+        self.tag[0].post.add(self.post[1])
 
-        post2 = Post(text='It is text2')
-        post2.save()
-
-        tag1 = Tag(tag='tag1')
-        tag1.save()
-
-        tag1.post.add(post1)
-        tag1.post.add(post2)
-
-        response = self.client.get('/', data={'search_tag': tag1.tag})
-        self.assertContains(response, post1.text)
-        self.assertContains(response, post2.text)
+        response = self.client.get('/', data={'search_tag': self.tag[0].tag})
+        self.assertContains(response, self.post[0].text)
+        self.assertContains(response, self.post[1].text)
