@@ -5,14 +5,14 @@
     <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js" integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo=" crossorigin="anonymous"></script>
   </head>
 <body>
-  <form method="GET" id="tag_search" action="{% block form_action %}{% endblock %}">
+  <form method="GET" action="{% block form_action %}{% endblock %}">
     {{ form.as_p }}
   {% block list_posts %}
   {% endblock %}
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$( "#tag_search" ).autocomplete({
+		$( "#id_search_tag" ).autocomplete({
 			source: "/"
 		});
 	})
