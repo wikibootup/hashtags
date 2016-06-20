@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.core import serializers
 
 from posts.models import Post, Tag
 from posts.forms import SearchForm
@@ -24,6 +25,7 @@ def home(request):
     if request.is_ajax():
         if request.GET['term']:
             result = Tag.objects.filter(tag__istartswith=request.GET['term'])
+            result = serializers.serialize('json', result, indent=2)
             if not result:
                 not_found = '검색 결과가 없습니다.'
                 return HttpResponse(
