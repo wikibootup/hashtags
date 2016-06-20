@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from posts.models import Post, Tag
 from posts.forms import SearchForm
+
+import json
 
 
 def home(request):
@@ -16,6 +20,25 @@ def home(request):
                 'posts': posts,
                 'form': SearchForm()
             })
+
+    if request.is_ajax():
+        if request.GET['term']:
+            result = Tag.objects.filter(tag__startswith=request.GET['term'])
+            if not result:
+                not_found = '검색 결과가 없습니다.'
+                return HttpResponse(
+                    json.dumps({'result': not_found}),
+                    'application/json'
+                )
+            return HttpResponse(
+                    json.dumps({'result': result}),
+                    'application/json'
+            )
+        else:
+            return HttpResponse(
+                json.dumps({'result': ''}),
+                'application/json'
+            )
 
     return render(request, 'home.html', {
         'posts': Post.objects.all(),
