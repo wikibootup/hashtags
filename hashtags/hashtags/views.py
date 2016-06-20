@@ -23,7 +23,7 @@ def home(request):
 
     if request.is_ajax():
         if request.GET['term']:
-            result = Tag.objects.filter(tag__startswith=request.GET['term'])
+            result = Tag.objects.filter(tag__istartswith=request.GET['term'])
             if not result:
                 not_found = '검색 결과가 없습니다.'
                 return HttpResponse(
