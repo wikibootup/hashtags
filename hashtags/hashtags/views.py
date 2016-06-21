@@ -25,16 +25,10 @@ def home(request):
     if request.is_ajax():
         if request.GET['term']:
             result = Tag.objects.filter(tag__istartswith=request.GET['term'])
-            result = serializers.serialize('json', result, indent=2)
-            if not result:
-                not_found = '검색 결과가 없습니다.'
-                return HttpResponse(
-                    json.dumps({'result': not_found}),
-                    'application/json'
-                )
+            result = serializers.serialize('json', result, indent=2)         
             return HttpResponse(
-                    json.dumps({'result': result}),
-                    'application/json'
+                json.dumps({'result': result}),
+                'application/json'
             )
         else:
             return HttpResponse(
