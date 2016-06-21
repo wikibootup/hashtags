@@ -14,20 +14,11 @@
 	$(document).ready(function() {
 		$( "#id_search_tag" ).autocomplete({
       source: "/",
+      messages: {
+        noResults: '',
+        results: function() {}
+      },
     })
-    .autocomplete( "instance" )._renderItem = function( ul, item ) {
-      var result = JSON.parse(item.label);
-      if(result.length == 0) {
-        return $( "<li>" )
-          .append( "<a>" + 'not found' + "</a>" )
-          .appendTo( ul );
-      }
-      else {
-        return $( "<li>" )
-          .append( "<a>" + result[0].fields.tag + "</a>" )
-          .appendTo( ul );
-      };
-    };
 	})
 </script>
 

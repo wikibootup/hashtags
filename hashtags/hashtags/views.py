@@ -22,20 +22,11 @@ def home(request):
                 'form': SearchForm()
             })
 
-    if request.is_ajax():
-        if request.GET['term']:
-            result = Tag.objects.filter(tag__istartswith=request.GET['term'])
-            result = serializers.serialize('json', result, indent=2)         
-            return HttpResponse(
-                json.dumps({'result': result}),
-                'application/json'
-            )
-        else:
-            return HttpResponse(
-                json.dumps({'result': ''}),
-                'application/json'
-            )
-
+    if request.is_ajax() and request.GET.get('term'):
+        return HttpResponse(
+            json.dumps({'result': 'test'}),
+            'application/json'
+        )
     return render(request, 'home.html', {
         'posts': Post.objects.all(),
         'form': SearchForm()
