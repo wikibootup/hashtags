@@ -23,8 +23,11 @@ def home(request):
             })
 
     if request.is_ajax() and request.GET.get('term'):
+        result = Tag.objects.filter(tag__istartswith=request.GET['term'])
+        result = serializers.serialize('json', result, indent=2)
+
         return HttpResponse(
-            json.dumps({'result': 'test'}),
+            json.dumps({'result': result}),
             'application/json'
         )
     return render(request, 'home.html', {
