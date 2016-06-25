@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.core import serializers
 
 from posts.models import Post, Tag
 from posts.forms import SearchForm
@@ -23,11 +22,17 @@ def home(request):
             })
 
     if request.is_ajax() and request.GET.get('term'):
-        result = Tag.objects.filter(tag__istartswith=request.GET['term'])
-        result = serializers.serialize('json', result, indent=2)
+        result = []
+        tags = Tag.objects.filter(tag__istartswith=request.GET['term'])
+        for tag in tags:
+            tags_ = {}
+            tags_['id'] = tag.id
+            tags_['label'] = tag.tag
+            tags_['value'] = tag.tag
+            result.append(tags_)
 
         return HttpResponse(
-            json.dumps({'result': result}),
+            json.dumps(result),
             'application/json'
         )
     return render(request, 'home.html', {
