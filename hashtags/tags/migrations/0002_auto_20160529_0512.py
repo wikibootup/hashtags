@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('posts', '0001_initial'),
+        ('tags', '0001_initial'),
     ]
 
     operations = [
@@ -27,6 +27,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='tag',
             name='post',
-            field=models.ManyToManyField(to='posts.Post'),
+            field=models.ManyToManyField(to='tags.Post'),
         ),
     ]

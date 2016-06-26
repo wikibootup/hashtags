@@ -2,8 +2,8 @@
 
 from django.test import TestCase
 
-from posts.forms import SearchForm
-from posts.models import Post, Tag
+from tags.forms import SearchForm
+from tags.models import Post, Tag
 
 
 class SearchTagsTest(TestCase):
@@ -21,10 +21,10 @@ class SearchTagsTest(TestCase):
         form = SearchForm()
         self.assertIn('placeholder="검색"', form.as_p())
 
-    def test_search_tag_query_out_correct_posts(self):
+    def test_search_tag_query_out_correct_tags(self):
         """
-        It assumes that the two posts are linked in 'tag1'.
-        New visitor searches 'tag1', then the two posts are queried out in the
+        It assumes that the two tags are linked in 'tag1'.
+        New visitor searches 'tag1', then the two tags are queried out in the
         result.
         """
 

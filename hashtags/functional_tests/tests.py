@@ -4,8 +4,8 @@ from selenium.webdriver.common.keys import Keys
 
 from unittest import skip
 
-from posts.models import Post, Tag
-from posts.forms import SearchForm
+from tags.models import Post, Tag
+from tags.forms import SearchForm
 
 
 class NewVisitorTest(LiveServerTestCase):

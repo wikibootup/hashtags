@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from posts.models import Post, Tag
+from tags.models import Post, Tag
 
 
 class TagTest(TestCase):

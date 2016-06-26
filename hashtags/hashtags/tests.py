@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 from django.test import TestCase
 
 import hashtags.views
-from posts.forms import SearchForm
+from tags.forms import SearchForm
 
 
 class HomePageTest(TestCase):
