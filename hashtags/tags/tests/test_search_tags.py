@@ -5,6 +5,8 @@ from django.test import TestCase
 from tags.forms import SearchForm
 from tags.models import Post, Tag
 
+import unittest
+
 
 class SearchTagsTest(TestCase):
 
@@ -21,6 +23,7 @@ class SearchTagsTest(TestCase):
         form = SearchForm()
         self.assertIn('placeholder="검색"', form.as_p())
 
+    @unittest.skip("it will be deprecated.")
     def test_search_tag_query_out_correct_tags(self):
         """
         It assumes that the two tags are linked in 'tag1'.

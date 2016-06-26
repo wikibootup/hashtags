@@ -2,7 +2,7 @@ from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-from unittest import skip
+import unittest
 
 from tags.models import Post, Tag
 from tags.forms import SearchForm
@@ -14,7 +14,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.post = []
         self.tag = []
         self.common_in_tags = 'tag'
-        for i in range(10):
+        for i in range(100):
             self.post.append(Post(text='It is text%s' % (i+1)))
             self.post[i].save()
             self.tag.append(Tag(tag='tag%s' % (i+1)))
@@ -35,6 +35,7 @@ class NewVisitorTest(LiveServerTestCase):
         response = self.client.get('/')
         self.assertIsInstance(response.context['form'], SearchForm)
 
+    @unittest.skip("it will be deprecated.")
     def test_search_tag_query_results_correct_url(self):
         self.tag[0].post.add(self.post[0])
 
@@ -48,6 +49,7 @@ class NewVisitorTest(LiveServerTestCase):
             self.browser.current_url
         )
 
+    @unittest.skip("it will be deprecated.")
     def test_search_tag_query_results_correct_posts(self):
         """
         It assumes that the two posts are linked in 'self.tag[0]'.
@@ -67,7 +69,8 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn(self.post[0].text, list_posts.text)
         self.assertIn(self.post[1].text, list_posts.text)
         self.assertNotIn(self.post[0].text, self.post[2].text)
-
+ 
+    @unittest.skip("it will be deprecated.")   
     def test_search_tag_query_count_correct_numbers(self):
         """
         It assumes that the two posts are linked in 'self.tag[0]'.
@@ -95,3 +98,13 @@ class NewVisitorTest(LiveServerTestCase):
             'ui-menu-item-wrapper')
         for idx, item in enumerate(items):
             self.assertEqual(self.tag[idx].tag, item.text)
+
+    def test_post_list_should_contain_correct_posts(self):
+        for i in range(10):
+            self.tag[0].post.add(self.post[i])
+        
+        url = "%s/%s/%s/" % (self.live_server_url, '/tags/', self.tag[0].tag)
+        self.browser.get(url)
+        items = self.browser.find_elements_by_class_name('post_list') 
+        for idx, item in enumerate(items):
+            self.assertEqual(self.post[i].text, item.text)

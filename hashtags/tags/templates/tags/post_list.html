@@ -1,3 +1,13 @@
 {% extends 'base.html' %}
 
 {% block form_action %}{% endblock %}
+
+{% block post_list %}
+  <div class="post_list">
+    {% for post in posts %}
+      <p>
+        {{ post.text }}
+      </p>
+    {% endfor %}
+  </div>
+{% endblock %}
