@@ -13,6 +13,7 @@ class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.post = []
         self.tag = []
+        self.common_in_tags = 'tag'
         for i in range(10):
             self.post.append(Post(text='It is text%s' % (i+1)))
             self.post[i].save()
@@ -85,3 +86,12 @@ class NewVisitorTest(LiveServerTestCase):
         list_posts = self.browser.find_element_by_id('id_list_posts')
         p_posts = list_posts.find_elements_by_tag_name('p')
         self.assertEqual(len(p_posts), 2)
+
+    def test_search_tag_should_show_tags_autocompleted(self):
+        self.browser.get(self.live_server_url)
+        inputbox = self.browser.find_element_by_id('id_search_tag')
+        inputbox.send_keys(self.common_in_tags)
+        items = self.browser.find_elements_by_class_name(
+            'ui-menu-item-wrapper')
+        for idx, item in enumerate(items):
+            self.assertEqual(self.tag[idx].tag, item.text)
