@@ -29,6 +29,7 @@ def home(request):
             tags_['id'] = tag.id
             tags_['label'] = tag.tag
             tags_['value'] = tag.tag
+            tags_['href'] = "/tags/%s" % tag.tag
             result.append(tags_)
 
         return HttpResponse(
