@@ -3,24 +3,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from tags.models import Post, Tag
-from tags.forms import SearchForm
 
 import json
 
 
 def home(request):
-    if request.method == 'GET':
-        form = SearchForm(request.GET)
-        if form.is_valid():
-            tag_query = form.cleaned_data['search_tag']
-            tag = Tag.objects.get(tag=tag_query)
-            posts = tag.post.all()
-
-            return render(request, 'posts.html', {
-                'posts': posts,
-                'form': SearchForm()
-            })
-
     if request.is_ajax() and request.GET.get('term'):
         result = []
         tags = Tag.objects.filter(tag__istartswith=request.GET['term'])
@@ -38,5 +25,4 @@ def home(request):
         )
     return render(request, 'home.html', {
         'posts': Post.objects.all(),
-        'form': SearchForm()
     })

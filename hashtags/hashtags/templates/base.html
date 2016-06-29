@@ -5,8 +5,9 @@
     <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js" integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo=" crossorigin="anonymous"></script>
   </head>
 <body>
-  <form method="GET" action="{% block form_action %}{% endblock %}">
-    {{ form.as_p }}
+
+  <input id="id_search_tag" name="search_tag" placeholder="검색" type="text">
+
   {% block post_list %}
   {% endblock %}
 
