@@ -1,58 +1,25 @@
-from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-import unittest
-
-from tags.models import Post, Tag
+from .base import FunctionalTest
 
 
-class NewVisitorTest(LiveServerTestCase):
-
-    def setUp(self):
-        self.post = []
-        self.tag = []
-        self.common_in_tags = 'tag'
-        for i in range(100):
-            self.post.append(Post(text='It is text%s' % (i+1)))
-            self.post[i].save()
-            self.tag.append(Tag(tag='tag%s' % (i+1)))
-            self.tag[i].save()
-
-        self.browser = webdriver.Chrome()
-        self.browser.implicitly_wait(3)
-
+class LoginTest(FunctionalTest):
     def tearDown(self):
         self.browser.quit()
-
-    def test_can_find_the_correct_title(self):
-        self.browser.get(self.live_server_url)
-
-        self.assertIn('Hashtags', self.browser.title)
-
-    def test_search_tag_should_show_tags_autocompleted(self):
-        self.browser.get(self.live_server_url)
-        inputbox = self.browser.find_element_by_id('id_search_tag')
-        inputbox.send_keys(self.common_in_tags)
-        items = self.browser.find_elements_by_class_name(
-            'ui-menu-item-wrapper')
-        for idx, item in enumerate(items):
-            self.assertEqual(self.tag[idx].tag, item.text)
-
-    def test_post_list_should_contain_correct_posts(self):
-        for i in range(10):
-            self.tag[0].post.add(self.post[i])
-
-        url = "%s/%s/%s/" % (self.live_server_url, 'tags', self.tag[0].tag)
-        self.browser.get(url)
-
-        item_text = self.browser.find_element_by_class_name('post_list').text
-        item_count = item_text.count('It is text')
-        for idx in range(item_count):
-            self.assertIn(self.post[i].text, item_text)
-
+ 
     def test_login_link_redirect_login_page(self):
         login_url = '/accounts/login/'
+
+        self.browser.get(self.live_server_url)
         login_link = self.browser.find_element_by_class_name('loginLink')
-        link_link.click()
-        self.assertEqual(self.browser.current_url, login_url)
+        login_link.click()
+        WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "testLogin"))
+        )
+
+        current_url = self.browser.current_url
+        self.assertTrue(current_url.endswith(login_url))
