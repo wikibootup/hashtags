@@ -50,3 +50,9 @@ class NewVisitorTest(LiveServerTestCase):
         item_count = item_text.count('It is text')
         for idx in range(item_count):
             self.assertIn(self.post[i].text, item_text)
+
+    def test_login_link_redirect_login_page(self):
+        login_url = '/accounts/login/'
+        login_link = self.browser.find_element_by_class_name('loginLink')
+        link_link.click()
+        self.assertEqual(self.browser.current_url, login_url)
