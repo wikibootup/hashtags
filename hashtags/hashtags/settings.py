@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'hashtags',
     'tags',
+    'accounts',
 )
 
 MIDDLEWARE_CLASSES = (
