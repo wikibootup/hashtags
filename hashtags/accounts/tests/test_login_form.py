@@ -2,6 +2,7 @@ from django.test import TestCase
 from accounts.forms import LoginForm
 
 class LoginFormTest(TestCase):
+
     def setUp(self):
         self.valid_email = 'valid@gmail.com'
         self.valid_password = 'valid_123*'
