@@ -8,9 +8,7 @@ from .base import FunctionalTest
 
 
 class LoginTest(FunctionalTest):
-    def tearDown(self):
-        self.browser.quit()
- 
+
     def test_login_link_redirect_login_page(self):
         login_url = '/accounts/login/'
 
