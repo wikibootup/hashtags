@@ -1,23 +1,28 @@
+# -*- coding: utf-8 -*-
+from django.http import HttpResponse
 from django.shortcuts import render
 
-from posts.models import Post, Tag
-from posts.forms import SearchForm
+from tags.models import Post, Tag
+
+import json
 
 
 def home(request):
-    if request.method == 'GET':
-        form = SearchForm(request.GET)
-        if form.is_valid():
-            tag_query = form.cleaned_data['search_tag']
-            tag = Tag.objects.get(tag=tag_query)
-            posts = tag.post.all()
+    if request.is_ajax() and request.GET.get('term'):
+        result = []
+        tags = Tag.objects.filter(tag__istartswith=request.GET['term'])
+        for tag in tags:
+            tags_ = {}
+            tags_['id'] = tag.id
+            tags_['label'] = tag.tag
+            tags_['value'] = tag.tag
+            tags_['href'] = tag.get_absoulte_url()
+            result.append(tags_)
 
-            return render(request, 'posts.html', {
-                'posts': posts,
-                'form': SearchForm()
-            })
-
+        return HttpResponse(
+            json.dumps(result),
+            'application/json'
+        )
     return render(request, 'home.html', {
         'posts': Post.objects.all(),
-        'form': SearchForm()
     })
