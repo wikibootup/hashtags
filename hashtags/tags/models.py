@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 
 class Post(models.Model):
@@ -10,4 +11,7 @@ class Tag(models.Model):
     post = models.ManyToManyField(Post)
 
     def natural_key(self):
-        return self.tag 
+        return self.tag
+
+    def get_absolute_url(self):
+        return reverse('tags:post_list', kwargs={'tag': self.tag})
