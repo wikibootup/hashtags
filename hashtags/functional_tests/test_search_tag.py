@@ -22,7 +22,10 @@ class SearchTagTest(FunctionalTest):
         for i in range(10):
             self.tag[0].post.add(self.post[i])
 
-        url = "%s/%s/%s/" % (self.live_server_url, 'tags', self.tag[0].tag)
+        url = "{0}{1}".format(
+            self.live_server_url,
+            self.tag[0].get_absolute_url()
+        )
         self.browser.get(url)
 
         item_text = self.browser.find_element_by_class_name('post_list').text
