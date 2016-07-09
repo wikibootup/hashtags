@@ -1,8 +1,9 @@
+{% load static %}
+
+<!DOCTYPE html>
 <html>
   <head>
     <title>Hashtags</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js" integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo=" crossorigin="anonymous"></script>
   </head>
 <body>
 {% block topbar %}
@@ -19,20 +20,15 @@
 {% block post_list %}
 {% endblock %}
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$( "#id_search_tag" ).autocomplete({
-      source: "/",
-      messages: {
-        //noResults: '',
-        //results: '',
-      },
-      select: function( event, ui ) {
-        window.location.href = ui.item.href;
-      },
-    })
-	})
-</script>
+{% block js %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js" 
+          integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo="
+          crossorigin="anonymous"></script>
+  <script type="text/javascript"
+          src="{% static 'js/jquery.autocomplete.js' %}"></script>
+{% endblock %}
+
 
 </body>
 </html>
