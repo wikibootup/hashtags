@@ -1,4 +1,4 @@
-{% load static %}
+{% load staticfiles %}
 
 <!DOCTYPE html>
 <html>
@@ -7,14 +7,7 @@
   </head>
 <body>
 {% block topbar %}
-  <header>
-    <div class="container">
-      <a href="{% url 'accounts:login' %}" class="loginLink">
-        <span>로그인</span>
-      </a>
-    <input id="id_search_tag" name="search_tag" placeholder="검색" type="text">
-    </div>
-  </header>
+  {% include "nav.html" %}
 {% endblock %}
 
 {% block post_list %}
@@ -26,7 +19,7 @@
           integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo="
           crossorigin="anonymous"></script>
   <script type="text/javascript"
-          src="{% static 'js/jquery.autocomplete.js' %}"></script>
+          src="{% static "js/jquery.autocomplete.js" %}"></script>
 {% endblock %}
 
 
