@@ -15,6 +15,9 @@ class SearchTagTest(FunctionalTest):
         inputbox.send_keys(self.common_in_tags)
         items = self.browser.find_elements_by_class_name(
             'ui-menu-item-wrapper')
+
+        if len(items) == 0:
+            self.fail("Autocompleted item should exist at least one")
         for idx, item in enumerate(items):
             self.assertEqual(self.tag[idx].tag, item.text)
 
