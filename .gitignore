@@ -28,6 +28,9 @@ tests/report/
 
 db.sqlite3
 
+# Collected static files
+collected_static/
+
 # Test Plugins
 .coverage
 
