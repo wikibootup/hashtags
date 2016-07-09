@@ -16,7 +16,7 @@ def home(request):
             tags_['id'] = tag.id
             tags_['label'] = tag.tag
             tags_['value'] = tag.tag
-            tags_['href'] = tag.get_absoulte_url()
+            tags_['href'] = tag.get_absolute_url()
             result.append(tags_)
 
         return HttpResponse(
