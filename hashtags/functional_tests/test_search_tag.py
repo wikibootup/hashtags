@@ -1,8 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 import unittest
-import os
 
 from tags.models import Post, Tag
 from .base import FunctionalTest
@@ -10,14 +12,16 @@ from .base import FunctionalTest
 
 class SearchTagTest(FunctionalTest):
 
-    @unittest.skipIf(
-        os.environ.get('TRAVIS'),
-        'Headless displayon Travis CI cannot catch autocomplete elements.'
-    )
     def test_search_tag_should_show_tags_autocompleted(self):
         self.browser.get(self.live_server_url)
         inputbox = self.browser.find_element_by_id('id_search_tag')
         inputbox.send_keys(self.common_in_tags)
+
+        WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located(
+                (By.CLASS_NAME, 'ui-menu-item-wrapper')
+            )
+        )
         items = self.browser.find_elements_by_class_name(
             'ui-menu-item-wrapper')
 
