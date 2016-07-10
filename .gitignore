@@ -36,3 +36,6 @@ collected_static/
 
 # JS & plugins
 bower_components/
+
+# log
+*.log
