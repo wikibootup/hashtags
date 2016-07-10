@@ -16,7 +16,7 @@ class FunctionalTest(LiveServerTestCase):
             self.tag.append(Tag(tag='tag%s' % (i+1)))
             self.tag[i].save()
 
-        self.browser = webdriver.Chrome()
+        self.browser = webdriver.PhantomJS()
         self.browser.implicitly_wait(3)
 
     def tearDown(self):
